@@ -1,0 +1,25 @@
+{% load static %}
+<header>
+  <div style="padding-left: 15px; padding-top: 20px; padding-bottom: 20px; background-color: black;">
+    {% if user.is_authenticated %}
+      <div class="row justify-content-between">
+        <div class="col-auto mr-auto">
+          <a class="navbar-brand" href="{% url 'users:profile' %}">
+            <img src="{% static 'img/logo.png'%}" width="150" height="23.5" class="d-inline-block align-top" alt="company-logo" >
+          </a>
+        </div>
+        <div class="col-auto mr-auto" align = 'right' style="padding-right: 25px">
+          {% comment %} <a href="{% url 'users:logout' %}" class="btn btn-primary" method="post">Выйти</a> {% endcomment %}
+          <form method="post" action="{% url 'users:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Выйти</button>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <a class="navbar-brand" href="{% url 'users:login' %}">
+        <img src="{% static 'img/logo.png'%}" width="150" height="23.5" class="d-inline-block align-top" alt="company-logo" >
+      </a> 
+    {% endif %}
+  </div>
+</header>

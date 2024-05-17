@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %} {{ user.username }} {% endblock %}
+{% load user_filters %}
+{% block information %}
+    <div class="row justify-content-center" style="padding-top: 40px;">
+        <div class="col-5">
+            <div class="card col-6 w-100 mx-auto mb-3">
+                <div class="card-header">
+                {% if request.user == user %}
+                    Мой профиль
+                {% else %}
+                    Информация о пользователе:
+                {% endif%}
+                </div>
+                <div class="card-body ">
+                <div class="h3">
+                    {{ user.get_full_name }}
+                </div>
+                <div class="h5 text-muted">
+                    @{{ user.username }}
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                    Пол: 
+                    {% if user.sex %} 
+                        {{ user.sex }}
+                    {% else %}
+                        не указан
+                    {% endif %}
+                    </li>
+                    <li class="list-group-item">
+                        Номер телефона: 
+                        {% if user.phone %} 
+                          {{ user.phone }}
+                        {% else %}
+                            не указан
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item">
+                        E-mail:
+                        {% if user.email %} 
+                            {{ user.email }}
+                        {% else %}
+                            не указан
+                        {% endif %}
+                    </li>
+                    {% if user.customer_profile.currency %}
+                        <li class="list-group-item">
+                            <div class="h3">Заказчик</div>
+                        </li>
+                        <li class="list-group-item">
+                            Валюта рассчетов:
+                            {{ user.customer_profile.currency }}
+                        </li>
+                    {% elif user.freelancer_profile.specialization %}
+                        <li class="list-group-item">
+                            <div class="h3">Исполнитель</div>
+                        </li>
+                        <li class="list-group-item">
+                            Специализация:
+                            {{ user.freelancer_profile.specialization|list_unpack }}
+                        </li>
+                    {% else %}
+                        <li class="list-group-item">
+                            <div class="h3">Администратор</div>
+                        </li>
+                    {% endif %}
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %} 
